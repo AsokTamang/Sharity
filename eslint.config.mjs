@@ -11,6 +11,11 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  { experimental: {
+    optimizePackageImports: ["@chakra-ui/react"],
+  }},
 ];
+
+
 
 export default eslintConfig;
