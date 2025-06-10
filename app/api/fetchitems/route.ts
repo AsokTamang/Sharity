@@ -25,11 +25,12 @@ export async function GET(req:NextRequest){
     }
         const decoded=jwt.verify(token,secretKey);
         const userID=(decoded as any).userID;
+        const loggedInUser=await userModal.findById(userID).lean();
      
        
         const datas=await itemModal.find({}).populate('user','email contact');   //here we are using the populate to show the user details also and we excluded the password detail
         console.log(datas);
-        return NextResponse.json({success:true,message:'successfully fetched the items',data:datas,userID:userID},{status:200})
+        return NextResponse.json({success:true,message:'successfully fetched the items',data:datas,userID:userID,user:loggedInUser},{status:200})
         
     } catch (error:any) {
         console.log(error.message)

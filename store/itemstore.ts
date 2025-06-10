@@ -3,6 +3,14 @@ import mongoose from "mongoose";
 import { create } from "zustand";
 import { userModal } from "@/models/usermodel";
 
+
+interface User{
+  _id:string;
+  email:string;
+  contact:number;
+}
+
+
 interface item {
   _id: mongoose.ObjectId;
   id: string;
@@ -22,8 +30,12 @@ interface item {
 interface itemstoreType {
   items: item[];
   userID: string;
+  user:User|null;
   fetchItems: () => Promise<{
     success: boolean;
+    user:User;
+    userID?:string;
+
     message: string;
     data?: item[];
     status: number;
@@ -49,25 +61,27 @@ interface itemstoreType {
 export const itemStore = create<itemstoreType>((set) => ({
   items: [],
   userID: "",
+  user:null,
   fetchItems: async () => {
     try {
       const res = await axios.get("/api/fetchitems");
-      const { success, data, message, userID } = res.data;
+      const { success, data, message, userID,user } = res.data;
       if (success) {
-        set((state) => ({ items: data, userID: userID })); //here we are using ...data casue data is also an array of objects returned from our mongo db
+        set(() => ({ items: data, userID: userID,user:{_id:user?._id.toString(),email:user?.email,contact:user?.contact} })); //here we are using ...data casue data is also an array of objects returned from our mongo db
         return {
           success: true,
-          message: message,
-          data: data,
-          userID: userID,
+          message,
+          data,
+          userID,
+          user,
           status: 200,
         };
       } else {
-        return { success: false, message: message, status: 500 };
+        return { success: false, message: message,  user: { _id: "", email: "", contact: 0 },status: 500 };
       }
     } catch (error: any) {
       console.log(error);
-      return { success: false, message: error.message, status: 500 };
+      return { success: false, message: error.message,  user: { _id: "", email: "", contact: 0 },status: 500 };
     }
   },
 

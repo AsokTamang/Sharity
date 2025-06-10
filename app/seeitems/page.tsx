@@ -75,11 +75,14 @@ export default function Fetching() {
   };
 
   const elements = (items as populatedItem[])?.map((item, index) => (
-    <Link href={`/seeitems/${item._id}`} key={index}>
+ 
+    
     <div
       className="bg-white shadow-lg rounded-xl overflow-hidden p-4 flex flex-col gap-3 transition-all duration-300 hover:shadow-2xl"
       key={index}
     >
+      <Link href={`/seeitems/${item._id}`} className="hover:text-green-500" key={index}>
+      Visit this page </Link>
       <p className="text-sm text-gray-500 font-medium">
         {userID === item?.user?._id?.toString() ? "Your item" : "Other's item"}
       </p>
@@ -141,7 +144,8 @@ export default function Fetching() {
         </div>
       </div>
     </div>
-    </Link>
+    
+   
   ));
 
   return (
