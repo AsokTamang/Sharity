@@ -22,7 +22,7 @@ export default function Signup() {
       if(success){
         setloggedin(true)
       toast.success(message);
-      setTimeout(()=> router.push("/main"),2000 )}
+      setTimeout(()=> router.push("/main"),1000 )}
      
      
     } catch (error:any) {

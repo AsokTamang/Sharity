@@ -13,6 +13,8 @@ const messageSchema=new mongoose.Schema({
     roomId:{
         type:String,
     }
+    
+    
     ,
     timeStamp:{
         type:Date,

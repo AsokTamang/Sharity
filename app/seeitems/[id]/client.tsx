@@ -60,7 +60,9 @@ export default function Client({ data }: itemprops) {
           <span className="font-semibold">Condition:</span> {condition}
         </p>
 
-        {userID.toString() !== data?.user?._id ?(
+        
+
+        {userID.toString() !== data?.user?._id.toString() && (
           
           <div className="mt-3 bg-gray-50 p-3 rounded-md border">
             <h3 className="font-semibold text-sm">Owner Details</h3>
@@ -76,11 +78,17 @@ export default function Client({ data }: itemprops) {
         
 
 
-        ):
-        <Link href={`/chatting${data?._id}`}>
+        )}
+
+
+        {userID===data?.user?._id.toString()&&  <Link href={`/chatting/${data?._id}`}>
         <p>See your inbox</p>
-        </Link>
-        }
+        </Link>}
+
+
+
+       
+        
        
       </div>
     </div>

@@ -11,14 +11,14 @@ interface user {
   contact:number;
 }
 
-export default async function Chat({params}:{params:{id:mongoose.Types.ObjectId}}){
+export default async function Chat({params}:{params:{id:string}}){
 
    
     const id=await params.id;  //this is a item's  id 
-    const data=await itemModal.findById(id);
+    const data=await itemModal.findById(new mongoose.Types.ObjectId(id));   
   
 
-    const ownerID=data?.user._id //as the params id is in string we convert it into a mongo db id to get the user info "sender" info
+    const ownerID=data?.user._id  
     
    
   
@@ -28,7 +28,7 @@ export default async function Chat({params}:{params:{id:mongoose.Types.ObjectId}
    
     return(
         <>
-      <ChatClientpage  ownerID={ownerID.toString()} itemID={id.toString()}   />
+      <ChatClientpage  ownerID={ownerID.toString()} itemID={id}   />
 
 
         </>

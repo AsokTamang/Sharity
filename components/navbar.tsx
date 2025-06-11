@@ -12,14 +12,14 @@ export default function Navbar() {
     (async () => {
       try {
         const res = await axios.get("/api/check",{withCredentials:true});
-        const { success } = await res.data;
+        const { success } = await res.data;    //we must use res.data while using axios inorder to destructure the responsed returned by our backend server
         console.log('checking token',success);
 
         setloggedin(success);
         console.log('store loggedin',loggedin)
-      } catch (error) {
+      } catch (error:any) {
         setloggedin(false);
-        console.log(loggedin)
+        console.log(error.message)
       }
     })(); //then we call this asyn function
   }, []);
