@@ -69,7 +69,7 @@ export default function Client({ data }: itemprops) {
             <p className="text-sm">📧 Email: {email}</p>
             <p className="text-sm">📞 Contact: {contact}</p>
           <Link href={`/chat/${data?._id}`}>   
-          <p>
+          <p className="text-xl font-bold font-serif hover:text-green-700">
         chat with the owner
         </p>
         </Link>
@@ -81,7 +81,7 @@ export default function Client({ data }: itemprops) {
         )}
 
 
-        {userID===data?.user?._id.toString()&&  <Link href={`/chatting/${data?._id}`}>
+        {userID===data?.user?._id.toString()&&  <Link href={`/chatting/${data?._id}`}>   {/*when the logged in user is the owner of an item*/}
         <p>See your inbox</p>
         </Link>}
 

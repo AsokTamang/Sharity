@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { messageModal } = require("./models/messagemodel"); // adjust path if necessary
 const { connection } = require("./connectionconfig/connectionconfig");
 const { buyerModal } = require("./models/buyerModal");
+const {roomidModal}=require("./models/roomModal");
 
 const port = "http://localhost:3000";
 import type { Types } from "mongoose"; //we can import the type using import and export even if the file is in commonjs
@@ -33,23 +34,29 @@ app.prepare().then(() => {
     cors: {
       origin: "http://localhost:3000", //this is the server link in which our next js app runs
 
-      methods: ["GET", "POST"],
+      methods: ["GET", "POST"], 
     },
   }); //this is our actual socket server;
 
   io.on("connection", (socket: any) => {
     console.log("user connected", socket.id); //here user is connected in our socket server using socket.id
-
-    socket.on("join-room", async (data: { roomID: string }) => {
+ 
+    socket.on("join-room", async (data: { roomID: string }) => {  //we are passing the roomID as an object here 
       //then we let the user to join the private chat room using the roomID
       const { roomID } = data; //destructering the roomID
       socket.join(roomID); //joining with the roomID
       const lastMessages = await messageModal
-        .find({ roomId: roomID })
-        .sort({ timeStamp: 1 })
+        .find({ roomId: roomID })   //finding our messages based on the room Id which is saved in the messagemodel
+        .sort({ timeStamp: 1 })     //sorting arranges the messages in an ascending order based on the timeStamp
         .populate("sender", "email contact"); //fetching the saved messages based on the roomID so we are using find method not findById
       //timestamp:1 arranges the lastmessages result in ascending order
       socket.emit("last messages", lastMessages); //then we emit that last or history messages
+      const savedRoomId=new roomidModal({    //we are storing the roomId in our different roomid modal which will have the collection of the roomids
+        roomid:roomID,
+
+      }) 
+
+      await savedRoomId.save()  //then we save that roomid
     });
 
     socket.on(
@@ -62,7 +69,7 @@ app.prepare().then(() => {
             _id: new mongoose.Types.ObjectId(msg.sender._id), //here we are converting the id of the user into mongoose object id cause the type of sender in our messagemodel is in objectid which is the reference to the User in our mongo db
           },
           content: msg.content,
-          roomId: roomID,
+          roomId: roomID,     //then we are also saving the roomID in our messagemodel
         });
 
         const finalMessageData = await newMessage.save();

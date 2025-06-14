@@ -10,7 +10,7 @@ const messageSchema=new mongoose.Schema({
         type:String,
         
     },
-    roomId:{
+    roomId:{    //we must save the roomID in our message model so that we can display the older messages which are linked with this message model
         type:String,
     }
     

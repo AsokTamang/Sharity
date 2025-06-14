@@ -42,6 +42,7 @@ const itemSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    collection:'items',
   }
 );
 export const itemModal =

@@ -8,6 +8,7 @@ import { Key, Trash } from "@deemlol/next-icons";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import SearchItem from "@/components/searchItem";
 
 interface populatedItem {
   _id: mongoose.ObjectId;
@@ -149,7 +150,10 @@ export default function Fetching() {
   ));
 
   return (
-    <>
+    <div className="flex flex-col item-center justify-center"> 
+    
+       <SearchItem/>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         {elements}
       </div>
@@ -196,6 +200,6 @@ export default function Fetching() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

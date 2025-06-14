@@ -8,10 +8,10 @@ import mongoose from "mongoose";
 
 export default async function Detail({ params }: { params: {id:mongoose.ObjectId}} ) {
 
-  const  id  = params.id;  //here we are destructuring the id from the params 
+  const  id  =params.id;  //here we are destructuring the id from the params 
   await connection();
 
-
+  
   const data = await itemModal.findById(id).populate('user','email contact');  //then we try to fetch the item data using mongoose model and also populating the user data of that specific item
  
   const item=data.toObject();   //here we are passing the mongoose document into object so it wont cause bug while passing this data as a prop in our client side page which is a part of this current page cause mongoose documnet cannot be passed as a prop directly which can cause bundle size error

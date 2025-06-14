@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import React from "react";
 import { authStore } from "@/store/globalstate";
+import { chatStore } from "@/store/chatStore";
+
+
 export default function Navbar() {
+  const {reset}=chatStore();     //as soon as the user logout we must also remove the values of messages,message which in our zustand store.
  const {loggedin,setloggedin}=authStore();
   const router = useRouter();
   React.useEffect(() => {
@@ -34,6 +38,8 @@ export default function Navbar() {
         console.log(message);
         router.push("/");
         setloggedin(false);
+       //////Reset function from our chatstore is used here.
+        reset(); 
       }
     } catch (error: any) {
       setloggedin(true);
