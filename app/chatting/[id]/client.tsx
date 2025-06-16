@@ -6,6 +6,7 @@ import {io} from 'socket.io-client'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { chatStore } from "@/store/chatStore";
+import {shallow} from "zustand/shallow"
 
 
 interface buyer{
@@ -24,13 +25,20 @@ interface wholeType{
     content:string;
 }
 export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyers:buyer[]}){
+  
   const{messages,message,setMessage,setMessages,setLastMessages,Hydrated}=chatStore();
+ 
+
   const [selectedBuyer,setSelectedBuyer]=React.useState('');
   const {userID,user}= itemStore();   //destructuring the value of loggedin user or sender's id and the sender's detail 
  
   const scrollRef=React.useRef<HTMLDivElement>(null);
   const socketRef=React.useRef<any>(null);   //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
- 
+  
+    
+
+
+
   React.useEffect(()=>{
     
     if(!selectedBuyer) return;  //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
@@ -56,7 +64,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
     }
 
 
-  },[selectedBuyer]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
+  },[selectedBuyer,userID,itemID]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
   
 
   React.useEffect(()=>{
@@ -88,6 +96,8 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
 
 
 
+
+
 return (
   <div className="max-w-2xl mx-auto mt-8 px-4">
    
@@ -101,7 +111,8 @@ return (
         <option disabled value="">
           -- Select a buyer --
         </option>
-        {buyers.map((buyer) => (
+        {buyers.filter((buyer)=>buyer._id!==userID).map((buyer) => (
+
           <option key={buyer._id} value={buyer._id}>     {/**we are setting the buyer's id as the value cause we need the buyer id ,itemid and the owner id,which in in this case is the loggedin user to create the roomid */}
             {buyer.email} ({buyer.contact})
           </option>
