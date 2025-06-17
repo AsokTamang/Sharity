@@ -36,7 +36,8 @@ export async function POST(req: NextRequest) {
     message: "Successfully signed up",
   },{status:200});
 }
-catch(Error:any){
-   return NextResponse.json({success:false,error:Error.message},{status:500})
+catch(error:unknown){
+  if(error instanceof Error){
+   return NextResponse.json({success:false,error:error.message},{status:500})}
 }
 }

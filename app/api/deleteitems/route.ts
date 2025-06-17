@@ -1,6 +1,6 @@
 import { NextRequest,NextResponse } from "next/server";
 import { itemModal } from "@/models/itemmodel";
-import { userModal } from "@/models/usermodel";
+
 export async function DELETE(req:NextRequest){
     const {id}=await req.json();
   
@@ -15,9 +15,10 @@ export async function DELETE(req:NextRequest){
             }
             return NextResponse.json({success:true,message:'Item deleted successfully',data:deletedData},{status:200})
         
-    } catch (error:any) {
+    } catch (error:unknown) {
+        if(error instanceof Error){
         console.log(error?.message);
-        return NextResponse.json({success:false,message:error?.message},{status:500})
+        return NextResponse.json({success:false,message:error?.message},{status:500})}
         
     }
 

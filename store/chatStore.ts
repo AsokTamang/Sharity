@@ -15,7 +15,7 @@ interface chatStoreType {
   message: string;
   Hydrated: boolean;
   setLastMessages: (msg: msg[]) => void;
-  setHydrated: (arg0: boolean) => void;
+  setHydrated: (val: boolean) => void;
   setMessages: (msg: msg) => void;
   setMessage: (msg: string) => void;
   reset: () => void;
@@ -27,7 +27,7 @@ export const chatStore = create<chatStoreType>()(
       messages: [],
       message: '',
       Hydrated: false,
-      setHydrated: (state) => set({ Hydrated: state }),
+      setHydrated: (val) => set({ Hydrated: val }),
       setLastMessages: (msg) => set({ messages: msg }),
       setMessages: (msg) => set((state) => ({ messages: [...state.messages, msg] })),
       setMessage: (msg) => set({ message: msg }),
@@ -40,15 +40,19 @@ export const chatStore = create<chatStoreType>()(
     }),
     {
       name: 'chat-Storage',
-      storage: createJSONStorage(() => localStorage),
+     storage:createJSONStorage(()=>localStorage),  //here we are creating a storage in the localStorage using createJSONStorage.
       partialize: (state) => ({
         messages: state.messages,
         message: state.message,
       }),
-      onRehydrateStorage: (state) => () => {
-        if(state){   //here we are checking if the zustand has retrieved the states from the localstorage completely or not.
-        (state as chatStoreType).setHydrated(true);}
-      },
+      onRehydrateStorage:(state)=>()=>{
+        if(state){
+          state.setHydrated(true);    //here we are checking if the state is retrieved from the localstorage by the zustand while displaying the ui.and if the state is ccompletely retrieved then we set the hydrated true.
+
+        }
+      }
+      
+    
     }
   )
 );

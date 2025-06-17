@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { connection } from "@/connectionconfig/connectionconfig";
 import { itemModal } from "@/models/itemmodel";
 import jwt from "jsonwebtoken";
-import { userModal } from "@/models/usermodel";
+
+interface JWTProps{
+  userID:string;
+}
+
 connection();
 
 const secretKey = process.env.JWT_KEY!;
@@ -16,8 +20,8 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const decoded = jwt.verify(token, secretKey); 
-    const userID = (decoded as any).userID;
+    const decoded = jwt.verify(token, secretKey) as JWTProps;   //by defining the propertyy here we can easily use the userID.
+    const userID = decoded.userID;
 
     const body = await req.json();
     const { id, name, description, image, condition } = body;
@@ -38,11 +42,12 @@ export async function POST(req: NextRequest) {
       { success: true, data: data, message: "Item inserted successfully" },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if(error instanceof Error){
     console.log(error.message);
     return NextResponse.json(
       { success: false, message: 'The id you entered is already used, please enter another id' },
       { status: 500 }
-    );
+    );}
   }
 }

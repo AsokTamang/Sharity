@@ -1,12 +1,10 @@
 
 import { itemModal } from "@/models/itemmodel";
-import { userModal } from "@/models/usermodel";
-import { itemStore } from "@/store/itemstore";
 import { connection } from "@/connectionconfig/connectionconfig";
 import Client from "./client";
 import mongoose from "mongoose";
 
-export default async function Detail({ params }: { params: {id:mongoose.ObjectId}} ) {
+export default async function Detail({ params }: { params: {id:string}} ) {
 
   const  id  =params.id;  //here we are destructuring the id from the params 
   await connection();

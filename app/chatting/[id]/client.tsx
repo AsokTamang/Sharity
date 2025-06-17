@@ -6,7 +6,8 @@ import {io} from 'socket.io-client'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { chatStore } from "@/store/chatStore";
-import {shallow} from "zustand/shallow"
+import { Socket } from "socket.io-client";
+
 
 
 interface buyer{
@@ -15,32 +16,37 @@ interface buyer{
   contact:number;
 }
 
-
-interface wholeType{
-  sender:{
-    _id:string;
+interface msgType{
+  sender:{_id:string;
     email:string;
-    contact:number; 
-  role:string; };
-    content:string;
+    contact:number;
+    role:string;
+  },
+  content:string;
 }
+
+
+
+
 export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyers:buyer[]}){
   
-  const{messages,message,setMessage,setMessages,setLastMessages,Hydrated}=chatStore();
+  const{messages,message,setMessage,setMessages,setLastMessages}=chatStore();
+  const Hydrated=chatStore(state=>state.Hydrated);
  
 
   const [selectedBuyer,setSelectedBuyer]=React.useState('');
   const {userID,user}= itemStore();   //destructuring the value of loggedin user or sender's id and the sender's detail 
  
   const scrollRef=React.useRef<HTMLDivElement>(null);
-  const socketRef=React.useRef<any>(null);   //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
+  const socketRef=React.useRef<Socket|null>(null);   //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
   
-    
 
 
+ 
 
   React.useEffect(()=>{
-    
+
+    if(!Hydrated) return;
     if(!selectedBuyer) return;  //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
     const  socket=io('http://localhost:3000');    //connecting to our backend server;
     socketRef.current?.disconnect();    //and we are disconnecting the previous socket connection if the previous socket connection exists  as this effect runs only when there is change in the buyer
@@ -49,11 +55,11 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
     const roomid=[userID,selectedBuyer,itemID].sort().join('_');    //this roomid is in the same format when the logged in user is not an owner of the item
     
     socket.emit('join-room',{roomID:roomid});   //here we are passing the join-room event to our backend server using the owner's id,item's id and the buyer's id as the roomID.
-    socket.on('last messages',(lastmsg:any)=>{     //then we just use the evnt called last messages provided by our backend here to display in our client side
+    socket.on('last messages',(lastmsg:msgType[])=>{     //then we just use the evnt called last messages provided by our backend here to display in our client side
         setLastMessages(lastmsg);
     });
       
-    socket.on('chat messages',(newmsg:any)=>{       //then we also use the chat messages evnt from our backend to display the latest message
+    socket.on('chat messages',(newmsg:msgType)=>{       //then we also use the chat messages evnt from our backend to display the latest message
       setMessages(newmsg)
     })
     console.log('roomid is :',roomid);
@@ -64,7 +70,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
     }
 
 
-  },[selectedBuyer,userID,itemID]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
+  },[selectedBuyer,userID,itemID,Hydrated]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
   
 
   React.useEffect(()=>{

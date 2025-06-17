@@ -1,73 +1,120 @@
 "use client";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import React, { FormEvent } from "react";
+import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import Form from 'next/form'
 import { authStore } from "@/store/globalstate";
 import Link from "next/link";
-export default function Signup() {
-  const{loggedin,setloggedin}=authStore();
-  
+import { itemStore } from "@/store/itemstore";
+
+export default function Signin() {
+  const { setloggedin } = authStore();
   const router = useRouter();
-  const [user, setuser] = React.useState({ email: "", password: "" });
-  const handlesubmit = async () => {
-   
+
+  const [user, setUser] = React.useState({ email: "", password: "" });
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
     try {
-        
-      const response = await axios.post("/api/signin", user);
-      const { success, message } =await response.data; //here as we are using the axios we can only retrieve the data or anything returned by our backedn using the . data only
-      if(success){
-        setloggedin(true)
-      toast.success(message);
-      setTimeout(()=> router.push("/main"),1000 )}
+      const response = await axios.post("/api/signin", user);  //here as we are using the axios we can only retrieve the data or anything returned by our backedn using the . data only
      
-     
-    } catch (error:any) {
-      setloggedin(false)
-      toast.error(error.response.data.message);   
-      console.log(error.response.data.message);
+      const { success, message } = response.data;
+      if (success) {
+        setloggedin(true);
+        toast.success(message);
+        router.push("/main");
+      } else {
+        setloggedin(false);
+        toast.error(message || "Sign in failed");
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setloggedin(false);
+        toast.error(error.message);
+        console.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <main className="flex flex-col gap-2 items-center mt-32  justify-start">
-    <Form action={handlesubmit} className=" w-96 p-8 hover:shadow-xl">
-      <div className="flex justify-start items-center max-w-[600px]">
-        <label htmlFor="email" className="p-2">Email</label>
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          value={user.email}
-          onChange={(e) => setuser({ ...user, email: e.target.value })}
-          placeholder="Enter an email"
-          required
-        />
-      </div>
-      <div className="flex justify-start items-center max-w-[600px]">
-        <label htmlFor="password" className="p-2">Password</label>
-        <Input
-          type="password"
-          id="password"
-          name="password"
-          value={user.password}
-          onChange={(e) => setuser({ ...user, password: e.target.value })}
-          placeholder="Enter a password"
-          required
-        />
-      </div>
+    <main className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+        <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
+          Sign In to Your Account
+        </h1>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+          className="space-y-5"
+        >
+          {/* Email */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Email Address
+            </label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              placeholder="Enter your email"
+              required
+              className="w-full"
+            />
+          </div>
 
-      <Button type="submit" className=" w-half" >Sign In</Button>
-       <h2>Don't have an account?</h2>
-       <span className="w-half bg-gray-900 hover:bg-gray-700 text-white p-1 rounded-[4px]">
-      <Link href='/signup'>Sign up </Link>
-      </span>
-      </Form>
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Password
+            </label>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              placeholder="Enter your password"
+              required
+              className="w-full"
+            />
+          </div>
 
-     
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Signing In..." : "Sign In"}
+          </Button>
+        </form>
+        <p className="mt-6 text-center text-gray-600">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/signup"
+            className="text-blue-600 hover:text-blue-700 font-semibold"
+          >
+            Sign up
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }

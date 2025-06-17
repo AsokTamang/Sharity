@@ -4,12 +4,22 @@ import { authStore } from "@/store/globalstate";
 import React from "react";
 import Image from "next/image";
 import mongoose from "mongoose";
-import { Key, Trash } from "@deemlol/next-icons";
+import {  Trash } from "@deemlol/next-icons";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import SearchItem from "@/components/searchItem";
 
+
+interface itemProps{
+  name:string;
+  image:string;
+  condition:string;
+  description:string;
+
+}
+
+// define the shape of each item
 interface populatedItem {
   _id: mongoose.ObjectId;
   id: string;
@@ -36,10 +46,12 @@ export default function Fetching() {
     setactiveId,
   } = authStore();
 
+  // fetch all items once component mounts
   React.useEffect(() => {
     fetchItems();
-  }, []);
+  },[] );
 
+  // delete an item
   const handlesubmit = async (id: mongoose.ObjectId) => {
     const { success, message } = await deleteItems(id);
     try {
@@ -48,12 +60,14 @@ export default function Fetching() {
       } else {
         toast.error(message);
       }
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      if(error instanceof Error){
+      toast.error(error.message);}
     }
   };
 
-  const handlesubmit2 = async (id: mongoose.ObjectId, newData: any) => {
+  // update an item
+  const handlesubmit2 = async (id: mongoose.ObjectId, newData: itemProps) => {
     const { success, message } = await updateItems(id, newData);
     try {
       if (success) {
@@ -70,20 +84,22 @@ export default function Fetching() {
       } else {
         toast.error(message);
       }
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      if(error instanceof Error){
+      toast.error(error.message);}
     }
   };
 
+  // loop through each item to display
   const elements = (items as populatedItem[])?.map((item, index) => (
- 
-    
     <div
-      className="bg-white shadow-lg rounded-xl overflow-hidden p-4 flex flex-col gap-3 transition-all duration-300 hover:shadow-2xl"
       key={index}
+      className="bg-white shadow-md rounded-xl overflow-hidden p-4 flex flex-col gap-3 transition duration-300 hover:shadow-2xl"
     >
-      <Link href={`/seeitems/${item._id}`} className="hover:text-green-500" key={index}>
-      Visit this page </Link>
+      <Link href={`/seeitems/${item._id}`} className="hover:text-green-500">
+        Visit this page
+      </Link>
+
       <p className="text-sm text-gray-500 font-medium">
         {userID === item?.user?._id?.toString() ? "Your item" : "Other's item"}
       </p>
@@ -118,6 +134,7 @@ export default function Fetching() {
         <div className="mt-4 flex gap-4">
           {userID === item?.user?._id?.toString() && (
             <>
+              {/* delete button */}
               <button
                 onClick={() => handlesubmit(item._id)}
                 className="text-red-600 hover:text-red-800 transition"
@@ -125,6 +142,8 @@ export default function Fetching() {
               >
                 <Trash size={24} />
               </button>
+
+              {/* edit button */}
               <button
                 onClick={() => {
                   setupdatedItem({
@@ -145,23 +164,25 @@ export default function Fetching() {
         </div>
       </div>
     </div>
-    
-   
   ));
 
   return (
-    <div className="flex flex-col item-center justify-center"> 
-    
-       <SearchItem/>
+    <div className="flex flex-col items-center justify-center px-4">
+      {/* search component */}
+      <SearchItem />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+      {/* grid view for items */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-8 w-full max-w-[1400px]">
         {elements}
       </div>
 
+      {/* popup for editing items */}
       {opened && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl w-[90%] max-w-md shadow-xl space-y-4">
             <h2 className="text-xl font-bold text-center">Update Item</h2>
+
+            {/* input fields */}
             <div className="space-y-3">
               {["name", "description", "image", "condition"].map((field) => (
                 <div key={field} className="space-y-1">
@@ -183,6 +204,8 @@ export default function Fetching() {
                 </div>
               ))}
             </div>
+
+            {/* action buttons */}
             <div className="flex justify-end gap-4 pt-4">
               <button
                 onClick={() => setopened(false)}

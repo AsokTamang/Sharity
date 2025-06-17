@@ -1,6 +1,6 @@
 import { NextRequest,NextResponse } from "next/server";
 import { itemModal } from "@/models/itemmodel";
-import { userModal } from "@/models/usermodel";
+
 export async function PUT(req:NextRequest){
     const {id,updateditem}=await req.json();
   
@@ -17,9 +17,12 @@ export async function PUT(req:NextRequest){
             }
             return NextResponse.json({success:true,message:'Item updated successfully',data:updatedData},{status:200})
         
-    } catch (error:any) {
+    } catch (error:unknown) 
+    
+    {
+        if(error instanceof Error){
         console.log(error?.message);
-        return NextResponse.json({success:false,message:error?.message},{status:500})
+        return NextResponse.json({success:false,message:error?.message},{status:500})}
         
     }
 

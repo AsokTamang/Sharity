@@ -1,5 +1,6 @@
 
 import mongoose from "mongoose";
+import { unique } from "next/dist/build/utils";
 
 const messageSchema=new mongoose.Schema({
     sender:{
@@ -12,6 +13,7 @@ const messageSchema=new mongoose.Schema({
     },
     roomId:{    //we must save the roomID in our message model so that we can display the older messages which are linked with this message model
         type:String,
+
     }
     
     

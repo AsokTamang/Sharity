@@ -1,7 +1,4 @@
 import ChattingClientpage from "./client"
-import { itemModal } from "@/models/itemmodel"
-import { userModal } from "@/models/usermodel"
-import mongoose from "mongoose";
 import { buyerModal } from "@/models/buyerModal";
 
 export default async function Chattingpage({params}:{params:{id:string}}){

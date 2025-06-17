@@ -17,15 +17,16 @@ export async function GET(req: NextRequest) {
         { status: 500 }
       );
     }
-    return NextResponse.json(
-      { success: true, data: data, message: "data fetched successfull" },
+    return NextResponse.json(  
+      { success: true, data: data._id.toString(), message: "data fetched successfull" },  //we are passing the _id of the data into string.
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if(error instanceof Error){
     console.log(error.message);
     return NextResponse.json(
       { success: false, data: null, message: "data fetched unsuccessfull" },
       { status: 500 }
-    );
+    );}
   }
 }

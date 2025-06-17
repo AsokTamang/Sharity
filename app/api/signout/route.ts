@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-export async function GET(req: NextRequest) {
+import { NextResponse } from "next/server";
+export async function GET() {
   try {
     const res = NextResponse.json(
       { success: true, message: "Signed out successfully" },
@@ -8,11 +8,12 @@ export async function GET(req: NextRequest) {
     res.cookies.set("token", "", { httpOnly: true, path: "/" });
     console.log(res.cookies);
     return res;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if(error instanceof Error){
     console.log(error.message);
     return NextResponse.json(
       { success: false, message: "Sign out unsuccessful" },
       { status: 500 }
-    );
+    );}
   }
 }
