@@ -1,26 +1,14 @@
 "use client"
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
-import { itemStore } from "@/store/itemstore";
+
 
 export default function Main() {
-  const router=useRouter();
-  const userID=itemStore(state=>state.userID)
-  const Hydrated=itemStore(state=>state.Hydrated)
-  React.useEffect(()=>{
-    if(!Hydrated) return;
-
-    if(userID){
-
-     router.replace('/main');}   //here we are checking if the user is loggedin then we prvent the loggedin user to go back to signin page cause user is pushed into this page from signin
-
-  },[userID,router,Hydrated])
+ 
  
   return (
     <>
-      {/* Top Action Buttons */}
-      {Hydrated?   
+       
       <>
       <div className="w-full flex flex-wrap justify-center gap-6 mt-6 px-4">
         <Link href="/additem">
@@ -50,7 +38,7 @@ export default function Main() {
           what’s no longer useful to one into something meaningful for another.
         </p>
       </main>
-      </>:<div>Loading...</div>}
+      </>
  
     </>
   );

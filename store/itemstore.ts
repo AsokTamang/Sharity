@@ -69,7 +69,7 @@ export const itemStore = create<itemstoreType>()(
       setHydrated: (val) => set({ Hydrated: val }),
       fetchItems: async () => {
         try {
-          const res = await axios.get("/api/fetchitems");
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/api/fetchitems`);
           const { success, data, message, userID, user } = res.data;
           if (success) {
             set(() => ({
@@ -110,7 +110,7 @@ export const itemStore = create<itemstoreType>()(
 
       deleteItems: async (ID: mongoose.ObjectId) => {
         try {
-          const res = await axios.delete(`/api/deleteitems`, {
+          const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL!}/api/deleteitems`, {
             data: { id: ID },
             headers: {
               "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export const itemStore = create<itemstoreType>()(
       updateItems: async (ID: mongoose.ObjectId, newData: any) => {
         try {
           const res = await axios.put(
-            "/api/updateitems",
+            `${process.env.NEXT_PUBLIC_API_URL!}/api/updateitems`,
             { id: ID, updateditem: newData },
             {
               headers: {

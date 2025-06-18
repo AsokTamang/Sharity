@@ -48,7 +48,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
 
     if(!Hydrated) return;
     if(!selectedBuyer) return;  //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
-    const  socket=io('http://localhost:3000');    //connecting to our backend server;
+    const  socket=io(process.env.NEXT_PUBLIC_API_URL!);    //connecting to our backend server;
     socketRef.current?.disconnect();    //and we are disconnecting the previous socket connection if the previous socket connection exists  as this effect runs only when there is change in the buyer
     socketRef.current=socket;   //here we are storing the instace of our actual socket in our socketRef using the useRef react hook.
    

@@ -16,7 +16,7 @@ export default function Navbar() {
   React.useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get("/api/check", { withCredentials: true });
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/api/check`, { withCredentials: true });
         const { success } = res.data;
         setloggedin(success);
       } catch (error: unknown) {
@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     try {
-      const res = await axios.get("/api/signout", { withCredentials: true });
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/api/signout`, { withCredentials: true });
       const { success } = res.data;
 
       if (success) {

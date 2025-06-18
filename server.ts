@@ -8,7 +8,7 @@ const { connection } = require("./connectionconfig/connectionconfig");
 const { buyerModal } = require("./models/buyerModal");
 const { roomidModal } = require("./models/roomModal");
 
-const port = "http://localhost:3000";
+const PORT=process.env.PORT||3000;
 
 
 interface messgaeDataType {
@@ -32,7 +32,7 @@ app.prepare().then(() => {
   const server = createServer(handle); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:3000", //this is the server link in which our next js app runs
+      origin:process.env.PORT!, //this is the server link in which our next js app runs
 
       methods: ["GET", "POST"],
     },
@@ -111,5 +111,5 @@ app.prepare().then(() => {
     });
   });
 
-  server.listen(3000, () => console.log("server is running at port", port));
+  server.listen(PORT, () => console.log("server is running at port", process.env.PORT!));
 });

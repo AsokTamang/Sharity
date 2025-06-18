@@ -15,7 +15,7 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
     setHydrated: (val) => set({ Hydrated: val }),
     fetchItems: async () => {
         try {
-            const res = await axios_1.default.get("/api/fetchitems");
+            const res = await axios_1.default.get(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchitems`);
             const { success, data, message, userID, user } = res.data;
             if (success) {
                 set(() => ({
@@ -57,7 +57,7 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
     },
     deleteItems: async (ID) => {
         try {
-            const res = await axios_1.default.delete(`/api/deleteitems`, {
+            const res = await axios_1.default.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/deleteitems`, {
                 data: { id: ID },
                 headers: {
                     "Content-Type": "application/json",
@@ -86,7 +86,7 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
     },
     updateItems: async (ID, newData) => {
         try {
-            const res = await axios_1.default.put("/api/updateitems", { id: ID, updateditem: newData }, {
+            const res = await axios_1.default.put(`${process.env.NEXT_PUBLIC_API_URL}/api/updateitems`, { id: ID, updateditem: newData }, {
                 headers: {
                     "Content-Type": "application/json",
                 },
