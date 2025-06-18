@@ -22,9 +22,9 @@ export default function Signin() {
 
   React.useEffect(()=>{
     if(userID){
-      redirect('/main');   //here in the sign in page itself we are checking if the useris already loggedin we can't make the loggedin user himself to visit the login page again that's why I used redirect method to /main page if the user is already loggedin.
+      router.replace('/main');   //here in the sign in page itself we are checking if the useris already loggedin we can't make the loggedin user himself to visit the login page again that's why I used redirect method to /main page if the user is already loggedin.
     }
-  },[userID]) 
+  },[userID,router]) 
 
 
   const handleSubmit = async () => {

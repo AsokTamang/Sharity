@@ -9,7 +9,7 @@ const { buyerModal } = require("./models/buyerModal");
 const { roomidModal } = require("./models/roomModal");
 
 const port = "http://localhost:3000";
-import type { Types } from "mongoose"; //we can import the type using import and export even if the file is in commonjs
+
 
 interface messgaeDataType {
   sender: {
