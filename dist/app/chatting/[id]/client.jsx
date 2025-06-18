@@ -13,15 +13,16 @@ const button_1 = require("@/components/ui/button");
 const chatStore_1 = require("@/store/chatStore");
 function ChattingClientpage({ itemID, buyers }) {
     const { messages, message, setMessage, setMessages, setLastMessages } = (0, chatStore_1.chatStore)();
+    const [selectedBuyer, setSelectedBuyer] = react_1.default.useState('');
     const Hydrated = (0, chatStore_1.chatStore)(state => state.Hydrated);
-    const { userID, user, selectedBuyer, setSelectedBuyer } = (0, itemstore_1.itemStore)(); //destructuring the value of loggedin user or sender's id and the sender's detail 
+    const { userID, user } = (0, itemstore_1.itemStore)(); //destructuring the value of loggedin user or sender's id and the sender's detail 
     const scrollRef = react_1.default.useRef(null);
     const socketRef = react_1.default.useRef(null); //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
     react_1.default.useEffect(() => {
         var _a;
         if (!Hydrated)
             return;
-        if (!selectedBuyer)
+        if (selectedBuyer === "")
             return; //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
         const socket = (0, socket_io_client_1.io)(process.env.NEXT_PUBLIC_API_URL); //connecting to our backend server;
         (_a = socketRef.current) === null || _a === void 0 ? void 0 : _a.disconnect(); //and we are disconnecting the previous socket connection if the previous socket connection exists  as this effect runs only when there is change in the buyer

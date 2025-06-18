@@ -9,8 +9,6 @@ const zustand_1 = require("zustand");
 const middleware_1 = require("zustand/middleware");
 exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => ({
     items: [],
-    selectedBuyer: "",
-    setSelectedBuyer: (val) => set({ selectedBuyer: val }),
     userID: "",
     user: null,
     Hydrated: false,
@@ -123,7 +121,6 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
         //after setting the storage name and storage we must partialize the datas that we need to save in our storage
         userID: state.userID,
         user: state.user,
-        selectedBuyer: state.selectedBuyer,
     }),
     onRehydrateStorage: (state) => () => {
         if (state) {
