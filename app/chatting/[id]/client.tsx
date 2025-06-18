@@ -31,11 +31,12 @@ interface msgType{
 export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyers:buyer[]}){
   
   const{messages,message,setMessage,setMessages,setLastMessages}=chatStore();
+  const [selectedBuyer,setSelectedBuyer]=React.useState('');
   const Hydrated=chatStore(state=>state.Hydrated);
  
 
  
-  const {userID,user,selectedBuyer,setSelectedBuyer}= itemStore();   //destructuring the value of loggedin user or sender's id and the sender's detail 
+  const {userID,user}= itemStore();   //destructuring the value of loggedin user or sender's id and the sender's detail 
  
   const scrollRef=React.useRef<HTMLDivElement>(null);
   const socketRef=React.useRef<Socket|null>(null);   //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
@@ -47,7 +48,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
   React.useEffect(()=>{
 
     if(!Hydrated) return;
-    if(!selectedBuyer) return;  //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
+    if(selectedBuyer==="") return;  //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
     const  socket=io(process.env.NEXT_PUBLIC_API_URL!);    //connecting to our backend server;
     socketRef.current?.disconnect();    //and we are disconnecting the previous socket connection if the previous socket connection exists  as this effect runs only when there is change in the buyer
     socketRef.current=socket;   //here we are storing the instace of our actual socket in our socketRef using the useRef react hook.

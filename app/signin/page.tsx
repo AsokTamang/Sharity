@@ -24,15 +24,15 @@ export default function Signin() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL!}/api/signin`, user);  //here as we are using the axios we can only retrieve the data or anything returned by our backedn using the . data only
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL!}/api/signin`, user,{withCredentials:true});  //here as we are using the axios we can only retrieve the data or anything returned by our backedn using the . data only
      
       const { success, message } = response.data;
       if (success) {
         setloggedin(true);
         toast.success(message);
         
-        router.push("/main");   //instead of using push we must use replace of router inorder to prevent the user to go back to the previous page hitting the back button because replace replaces the previous page url with this entered page url inside a  history stack.
-
+        router.push(`/main`);   //instead of using push we must use replace of router inorder to prevent the user to go back to the previous page hitting the back button because replace replaces the previous page url with this entered page url inside a  history stack.
+        router.refresh();
 
       } else {
         setloggedin(false);

@@ -2,7 +2,7 @@
 
 import { itemStore } from "@/store/itemstore";
 
-import Link from "next/link";
+
 import Image from "next/image";
 
 // Props passed from server to client
@@ -71,11 +71,11 @@ export default function Client({ data }: itemprops) {
             <p className="text-sm">📧 Email: {email}</p>
             <p className="text-sm">📞 Contact: {contact}</p>
 
-            <Link href={`/chat/${data?._id}`}>
+            <a href={`/chat/${data?._id}`}>
               <p className="text-base font-semibold text-green-700 hover:underline hover:text-green-800">
                 chat with the owner
               </p>
-            </Link>
+            </a>
           
           </div>
         )}

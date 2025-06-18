@@ -28,9 +28,7 @@ interface item {
 
 interface itemstoreType {
   items: item[];
-  selectedBuyer:string;
-  setSelectedBuyer:(val:string)=>void;
-  
+
   userID: string;
   user: User | null;
   Hydrated: boolean;
@@ -66,15 +64,14 @@ export const itemStore = create<itemstoreType>()(
   persist(
     (set) => ({
       items: [],
-      selectedBuyer:"",
-      setSelectedBuyer:(val)=>set({selectedBuyer:val}),
+     
       userID: "",
       user: null,
       Hydrated: false,
       setHydrated: (val) => set({ Hydrated: val }),
       fetchItems: async () => {
         try {
-          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/api/fetchitems`);
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/api/fetchitems`,{withCredentials:true});
           const { success, data, message, userID, user } = res.data;
           if (success) {
             set(() => ({
@@ -120,6 +117,7 @@ export const itemStore = create<itemstoreType>()(
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials:true
           });
           const { success, data, message } = await res.data;
           if (success) {
@@ -149,6 +147,7 @@ export const itemStore = create<itemstoreType>()(
               headers: {
                 "Content-Type": "application/json",
               },
+              withCredentials:true
             }
           );
           const { success, data, message } = await res.data; //here we are using the res.data as axios's reponse is stored in data
@@ -180,7 +179,7 @@ export const itemStore = create<itemstoreType>()(
         //after setting the storage name and storage we must partialize the datas that we need to save in our storage
         userID: state.userID,
         user: state.user,
-        selectedBuyer:state.selectedBuyer,
+        
       }),
       onRehydrateStorage: (state) => () => {
         if (state) {

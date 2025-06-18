@@ -16,7 +16,8 @@ app.prepare().then(async () => {
     const server = createServer(handle); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
     const io = new Server(server, {
         cors: {
-            origin: [process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"], //this is the server link in which our next js app runs
+            origin: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000", //this is the server link in which our next js app runs
+            credentials: true,
             methods: ["GET", "POST"],
         },
     }); //this is our actual socket server;

@@ -17,7 +17,7 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
     setHydrated: (val) => set({ Hydrated: val }),
     fetchItems: async () => {
         try {
-            const res = await axios_1.default.get(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchitems`);
+            const res = await axios_1.default.get(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchitems`, { withCredentials: true });
             const { success, data, message, userID, user } = res.data;
             if (success) {
                 set(() => ({
@@ -64,6 +64,7 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
                 headers: {
                     "Content-Type": "application/json",
                 },
+                withCredentials: true
             });
             const { success, data, message } = await res.data;
             if (success) {
@@ -92,6 +93,7 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
                 headers: {
                     "Content-Type": "application/json",
                 },
+                withCredentials: true
             });
             const { success, data, message } = await res.data; //here we are using the res.data as axios's reponse is stored in data
             if (success) {

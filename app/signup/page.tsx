@@ -20,7 +20,7 @@ export default function Signup() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL!}/api/signup`, user);   //here as we are using the axios we can only retrieve the data or anything returned by our backedn using the . data only
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL!}/api/signup`, user,{withCredentials:true});   //here as we are using the axios we can only retrieve the data or anything returned by our backedn using the . data only
      
       const { success, message } = response.data;
       if (success) {

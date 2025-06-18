@@ -6,7 +6,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Client;
 const itemstore_1 = require("@/store/itemstore");
-const link_1 = __importDefault(require("next/link"));
 const image_1 = __importDefault(require("next/image"));
 function Client({ data }) {
     var _a, _b, _c, _d;
@@ -39,11 +38,11 @@ function Client({ data }) {
             <p className="text-sm">📧 Email: {email}</p>
             <p className="text-sm">📞 Contact: {contact}</p>
 
-            <link_1.default href={`/chat/${data === null || data === void 0 ? void 0 : data._id}`}>
+            <a href={`/chat/${data === null || data === void 0 ? void 0 : data._id}`}>
               <p className="text-base font-semibold text-green-700 hover:underline hover:text-green-800">
                 chat with the owner
               </p>
-            </link_1.default>
+            </a>
           
           </div>)}
 

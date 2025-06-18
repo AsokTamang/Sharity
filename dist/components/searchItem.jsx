@@ -17,7 +17,7 @@ function SearchItem() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios_1.default.get(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchbyname?itemName=${query}`); //we are passing the query as a url in the backend api
+            const res = await axios_1.default.get(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchbyname?itemName=${query}`, { withCredentials: true }); //we are passing the query as a url in the backend api
             const { data } = res.data;
             if (!data) {
                 alert("No items found");

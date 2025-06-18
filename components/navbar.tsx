@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -47,38 +47,38 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md sticky top-0 z-50">
       <div className="text-2xl font-bold text-amber-500">
-        <Link
+        <a
           href="/"
           className="hover:text-amber-600 transition-colors duration-200"
-        >Sharity</Link></div>
+        >Sharity</a></div>
       <div className="flex items-center space-x-6 text-gray-700 font-medium">
-        <Link
+        <a
           href="/"
           className="hover:text-amber-600 transition-colors duration-200"
         >
           Home
-        </Link>
-        <Link
+        </a>
+        <a
           href="/main"
           className="hover:text-amber-600 transition-colors duration-200"
         >
           Main
-        </Link>
+        </a>
 
         {!loggedin && (
           <>
-            <Link
+            <a
               href="/signup"
               className="hover:text-amber-600 transition-colors duration-200"
             >
               Signup
-            </Link>
-            <Link
+            </a>
+            <a
               href="/signin"
               className="hover:text-amber-600 transition-colors duration-200"
             >
               Signin
-            </Link>
+            </a>
           </>
         )}
 
