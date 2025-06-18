@@ -27,12 +27,12 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev }); //here we are making the app from the instance of next depending upon the type of env
 const handle = app.getRequestHandler(); //here this handle function is the function of nextjs that handles the routing server functionality
 
-app.prepare().then(() => {
-  connection(); ///first of all we must connect with our mongo db
+app.prepare().then(async() => {
+  await connection(); ///first of all we must connect with our mongo db
   const server = createServer(handle); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
   const io = new Server(server, {
     cors: {
-      origin:process.env.PORT!, //this is the server link in which our next js app runs
+      origin:[process.env.NEXT_PUBLIC_API_URL||"http://localhost:3000"], //this is the server link in which our next js app runs
 
       methods: ["GET", "POST"],
     },
@@ -110,6 +110,6 @@ app.prepare().then(() => {
       console.log("user disconnected");
     });
   });
-
-  server.listen(PORT, () => console.log("server is running at port", process.env.PORT!));
+  server.listen(PORT,()=>console.log(`server running at http://localhost:${PORT}`))   //we must include the full url to visit the page locally
+  
 });

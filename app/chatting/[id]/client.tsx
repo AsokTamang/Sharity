@@ -34,8 +34,8 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
   const Hydrated=chatStore(state=>state.Hydrated);
  
 
-  const [selectedBuyer,setSelectedBuyer]=React.useState('');
-  const {userID,user}= itemStore();   //destructuring the value of loggedin user or sender's id and the sender's detail 
+ 
+  const {userID,user,selectedBuyer,setSelectedBuyer}= itemStore();   //destructuring the value of loggedin user or sender's id and the sender's detail 
  
   const scrollRef=React.useRef<HTMLDivElement>(null);
   const socketRef=React.useRef<Socket|null>(null);   //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
@@ -70,7 +70,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
     }
 
 
-  },[setMessages,setLastMessages,selectedBuyer,userID,itemID,Hydrated]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
+  },[setMessages,setLastMessages,selectedBuyer,userID,itemID,Hydrated,setSelectedBuyer]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
   
 
   React.useEffect(()=>{

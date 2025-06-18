@@ -48,11 +48,12 @@ function Client({ data }) {
           </div>)}
 
         {/* when the logged in user is the owner of an item */}
-        {userID === ((_d = data === null || data === void 0 ? void 0 : data.user) === null || _d === void 0 ? void 0 : _d._id.toString()) && (<link_1.default href={`/chatting/${data === null || data === void 0 ? void 0 : data._id}`}>
+        {userID === ((_d = data === null || data === void 0 ? void 0 : data.user) === null || _d === void 0 ? void 0 : _d._id.toString()) && (<a href={`/chatting/${data === null || data === void 0 ? void 0 : data._id}`}>
             <p className="text-base font-medium text-blue-600 hover:underline hover:text-blue-800">
               See your inbox
             </p>
-          </link_1.default>)}
+          </a> //i used anchor tag here cause it will do the full page reload so that there will be new socket connection and we can see the latest chat messages.
+        )}
       </div>
     </div>);
 }

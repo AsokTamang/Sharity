@@ -14,8 +14,7 @@ const chatStore_1 = require("@/store/chatStore");
 function ChattingClientpage({ itemID, buyers }) {
     const { messages, message, setMessage, setMessages, setLastMessages } = (0, chatStore_1.chatStore)();
     const Hydrated = (0, chatStore_1.chatStore)(state => state.Hydrated);
-    const [selectedBuyer, setSelectedBuyer] = react_1.default.useState('');
-    const { userID, user } = (0, itemstore_1.itemStore)(); //destructuring the value of loggedin user or sender's id and the sender's detail 
+    const { userID, user, selectedBuyer, setSelectedBuyer } = (0, itemstore_1.itemStore)(); //destructuring the value of loggedin user or sender's id and the sender's detail 
     const scrollRef = react_1.default.useRef(null);
     const socketRef = react_1.default.useRef(null); //we made this ref to store our socket server instance so that we can use our server instance in multiple functions as shown below
     react_1.default.useEffect(() => {
@@ -41,7 +40,7 @@ function ChattingClientpage({ itemID, buyers }) {
             socket.off('last messages');
             socket.disconnect();
         };
-    }, [setMessages, setLastMessages, selectedBuyer, userID, itemID, Hydrated]); //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
+    }, [setMessages, setLastMessages, selectedBuyer, userID, itemID, Hydrated, setSelectedBuyer]); //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
     react_1.default.useEffect(() => {
         var _a;
         (_a = scrollRef.current) === null || _a === void 0 ? void 0 : _a.scrollIntoView({ behavior: 'smooth' });

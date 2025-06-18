@@ -82,11 +82,11 @@ export default function Client({ data }: itemprops) {
 
         {/* when the logged in user is the owner of an item */}
         {userID === data?.user?._id.toString() && (
-          <Link href={`/chatting/${data?._id}`}>
+          <a href={`/chatting/${data?._id}`}>
             <p className="text-base font-medium text-blue-600 hover:underline hover:text-blue-800">
               See your inbox
             </p>
-          </Link>
+          </a>  //i used anchor tag here cause it will do the full page reload so that there will be new socket connection and we can see the latest chat messages.
         )}
       </div>
     </div>
