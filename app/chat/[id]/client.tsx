@@ -83,7 +83,7 @@ export default function ChatClientpage({
       socket.off("last messages");
       socket.disconnect(); //we are also disconnecting the socket
     };
-  }, [userID,itemID,ownerID,Hydrated]);
+  }, [setLastMessages,setMessages,userID,itemID,ownerID,Hydrated]);
 
   React.useEffect(() => {
    

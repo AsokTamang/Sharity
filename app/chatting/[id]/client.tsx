@@ -70,7 +70,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
     }
 
 
-  },[selectedBuyer,userID,itemID,Hydrated]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
+  },[setMessages,setLastMessages,selectedBuyer,userID,itemID,Hydrated]);   //we run this use effect only when there is new selected buyer so that there is new socket connection for each buyers
   
 
   React.useEffect(()=>{

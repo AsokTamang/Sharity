@@ -1,8 +1,8 @@
 import ChattingClientpage from "./client"
 import { buyerModal } from "@/models/buyerModal";
 
-export default async function Chattingpage({params}:{params:{id:string}}){
-    const {id}=params;   //this is the id of an item which is in string format
+export default async function Chattingpage({params}:{params:Promise<{id:string}>}){
+    const id=(await params).id;   //this is the id of an item which is in string format
     
 
 

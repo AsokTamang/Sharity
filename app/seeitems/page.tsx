@@ -46,10 +46,10 @@ export default function Fetching() {
     setactiveId,
   } = authStore();
 
-  // fetch all items once component mounts
+  // fetching all items once component mounts
   React.useEffect(() => {
     fetchItems();
-  },[] );
+  },[fetchItems] );
 
   // delete an item
   const handlesubmit = async (id: mongoose.ObjectId) => {

@@ -7,10 +7,13 @@ import { itemModal } from '@/models/itemmodel';
 
 
 
-export default async function Chat({params}:{params:{id:string}}){
+
+
+
+export default async function Chat({params}:{params:Promise<{id:string}>}){
 
    
-    const id= params.id;  //this is a item's  id 
+    const id=(await params).id;  //this is a item's  id 
     const data=await itemModal.findById(new mongoose.Types.ObjectId(id));      //then we are extracting the item detail
   
 
