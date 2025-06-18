@@ -33,7 +33,7 @@ function Signin() {
             if (success) {
                 setloggedin(true);
                 react_hot_toast_1.default.success(message);
-                router.replace("/"); //instead of using push we must use replace of router inorder to prevent the user to go back to the previous page hitting the back button because replace replaces the previous page url with this entered page url inside a  history stack.
+                router.push("/main"); //instead of using push we must use replace of router inorder to prevent the user to go back to the previous page hitting the back button because replace replaces the previous page url with this entered page url inside a  history stack.
             }
             else {
                 setloggedin(false);
