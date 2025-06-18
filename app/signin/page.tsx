@@ -5,17 +5,27 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { authStore } from "@/store/globalstate";
 import Link from "next/link";
 import { itemStore } from "@/store/itemstore";
 
+
+
 export default function Signin() {
+  const userID=itemStore(state=>state.userID);
   const { setloggedin } = authStore();
   const router = useRouter();
 
   const [user, setUser] = React.useState({ email: "", password: "" });
   const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(()=>{
+    if(userID){
+      redirect('/main');   //here in the sign in page itself we are checking if the useris already loggedin we can't make the loggedin user himself to visit the login page again that's why I used redirect method to /main page if the user is already loggedin.
+    }
+  },[userID]) 
+
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -26,7 +36,10 @@ export default function Signin() {
       if (success) {
         setloggedin(true);
         toast.success(message);
-        router.push("/main");
+        
+        router.replace("/");   //instead of using push we must use replace of router inorder to prevent the user to go back to the previous page hitting the back button because replace replaces the previous page url with this entered page url inside a  history stack.
+
+
       } else {
         setloggedin(false);
         toast.error(message || "Sign in failed");
