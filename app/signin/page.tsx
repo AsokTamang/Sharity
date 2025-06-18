@@ -13,19 +13,14 @@ import { itemStore } from "@/store/itemstore";
 
 
 export default function Signin() {
-  const userID=itemStore(state=>state.userID);
+
   const { setloggedin } = authStore();
   const router = useRouter();
 
   const [user, setUser] = React.useState({ email: "", password: "" });
   const [loading, setLoading] = React.useState(false);
 
-  React.useEffect(()=>{
-    if(userID){
-      router.replace('/main');   //here in the sign in page itself we are checking if the useris already loggedin we can't make the loggedin user himself to visit the login page again that's why I used redirect method to /main page if the user is already loggedin.
-    }
-  },[userID,router]) 
-
+ 
 
   const handleSubmit = async () => {
     setLoading(true);

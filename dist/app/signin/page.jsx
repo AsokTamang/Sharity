@@ -13,18 +13,11 @@ const react_hot_toast_1 = __importDefault(require("react-hot-toast"));
 const navigation_1 = require("next/navigation");
 const globalstate_1 = require("@/store/globalstate");
 const link_1 = __importDefault(require("next/link"));
-const itemstore_1 = require("@/store/itemstore");
 function Signin() {
-    const userID = (0, itemstore_1.itemStore)(state => state.userID);
     const { setloggedin } = (0, globalstate_1.authStore)();
     const router = (0, navigation_1.useRouter)();
     const [user, setUser] = react_1.default.useState({ email: "", password: "" });
     const [loading, setLoading] = react_1.default.useState(false);
-    react_1.default.useEffect(() => {
-        if (userID) {
-            router.replace('/main'); //here in the sign in page itself we are checking if the useris already loggedin we can't make the loggedin user himself to visit the login page again that's why I used redirect method to /main page if the user is already loggedin.
-        }
-    }, [userID, router]);
     const handleSubmit = async () => {
         setLoading(true);
         try {
