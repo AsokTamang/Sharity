@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { authStore } from "@/store/globalstate";
 import Link from "next/link";
 import { itemStore } from "@/store/itemstore";
