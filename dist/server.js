@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const { createServer } = require("http"); //we are using the createServer from http to make a custom server for our socket connection
 const next = require("next");
 const { Server } = require("socket.io");
@@ -13,12 +14,17 @@ const app = next({ dev }); //here we are making the app from the instance of nex
 const handle = app.getRequestHandler(); //here this handle function is the function of nextjs that handles the routing server functionality
 app.prepare().then(async () => {
     await connection(); ///first of all we must connect with our mongo db
-    const server = createServer(handle); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
+    const server = createServer((req, res) => {
+        var _a;
+        if ((_a = req.url) === null || _a === void 0 ? void 0 : _a.startsWith('/socket.io'))
+            return;
+        handle(req, res);
+    }); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
     const io = new Server(server, {
         cors: {
             origin: "https://sharity-production.up.railway.app", //this is the server link in which our next js app runs
             credentials: true,
-            methods: ["GET", "POST"]
+            methods: ["GET", "POST"],
         },
     }); //this is our actual socket server;
     io.on("connection", (socket) => {

@@ -1,4 +1,12 @@
+
+
+
+
+
+
+
 const { createServer } = require("http"); //we are using the createServer from http to make a custom server for our socket connection
+import type { IncomingMessage,ServerResponse } from "http";
 const next = require("next");
 const { Server } = require("socket.io");
 const mongoose = require("mongoose");
@@ -8,8 +16,7 @@ const { connection } = require("./connectionconfig/connectionconfig");
 const { buyerModal } = require("./models/buyerModal");
 const { roomidModal } = require("./models/roomModal");
 
-const PORT=process.env.PORT||8080;
-
+const PORT = process.env.PORT || 8080;
 
 interface messgaeDataType {
   sender: {
@@ -27,15 +34,16 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev }); //here we are making the app from the instance of next depending upon the type of env
 const handle = app.getRequestHandler(); //here this handle function is the function of nextjs that handles the routing server functionality
 
-app.prepare().then(async() => {
+app.prepare().then(async () => {
   await connection(); ///first of all we must connect with our mongo db
-  const server = createServer(handle); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
+  const server = createServer((req:IncomingMessage,res:ServerResponse)=>{
+    if(req.url?.startsWith('/socket.io'))return; 
+    handle(req,res);}); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
   const io = new Server(server, {
     cors: {
-      origin:"https://sharity-production.up.railway.app", //this is the server link in which our next js app runs
-      credentials:true,
-      methods: ["GET", "POST"]
-      
+      origin: "https://sharity-production.up.railway.app", //this is the server link in which our next js app runs
+      credentials: true,
+      methods: ["GET", "POST"],
     },
   }); //this is our actual socket server;
 
@@ -111,6 +119,7 @@ app.prepare().then(async() => {
       console.log("user disconnected");
     });
   });
-  server.listen(PORT,"0.0.0.0",()=>console.log(`server running at http://localhost:${PORT}`))   //we must include the full url to visit the page locally
-  
+  server.listen(PORT, "0.0.0.0", () =>
+    console.log(`server running at http://localhost:${PORT}`)
+  ); //we must include the full url to visit the page locally
 });

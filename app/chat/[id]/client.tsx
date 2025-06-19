@@ -59,7 +59,7 @@ export default function ChatClientpage({
     const roomid = [userID, ownerID, itemID].sort().join("_"); //we are making the roomid using the logged in user id , owner id and the item id and all of these are in string
     const socket = io('https://sharity-production.up.railway.ap',{
       withCredentials:true,
-      transports:['websocket'],  //faster socket connection.
+     //faster socket connection.
     }); //connecting to our backend server;
     socketRef.current?.disconnect(); //we are disconnecting the older socket connection to prevent the duplicate messages and duplicate connection
     socketRef.current = socket; //here we are storing the instace of our actual socket in our socketRef using the useRef react hook.

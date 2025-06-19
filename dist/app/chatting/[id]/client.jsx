@@ -26,7 +26,7 @@ function ChattingClientpage({ itemID, buyers }) {
             return; //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
         const socket = (0, socket_io_client_1.io)('https://sharity-production.up.railway.ap', {
             withCredentials: true,
-            transports: ['websocket'], //here we are using websocket as transports for faster connection to socket
+            //here we are using websocket as transports for faster connection to socket
         }); //connecting to our backend server;
         (_a = socketRef.current) === null || _a === void 0 ? void 0 : _a.disconnect(); //and we are disconnecting the previous socket connection if the previous socket connection exists  as this effect runs only when there is change in the buyer
         socketRef.current = socket; //here we are storing the instace of our actual socket in our socketRef using the useRef react hook.
