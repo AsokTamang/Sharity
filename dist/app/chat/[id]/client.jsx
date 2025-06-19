@@ -25,7 +25,7 @@ function ChatClientpage({ ownerID, itemID, }) {
         if (!userID)
             return;
         const roomid = [userID, ownerID, itemID].sort().join("_"); //we are making the roomid using the logged in user id , owner id and the item id and all of these are in string
-        const socket = (0, socket_io_client_1.io)('https://sharity-production.up.railway.ap', {
+        const socket = (0, socket_io_client_1.io)('https://sharity-production.up.railway.app', {
             withCredentials: true,
             //faster socket connection.
         }); //connecting to our backend server;

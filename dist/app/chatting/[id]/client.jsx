@@ -24,7 +24,7 @@ function ChattingClientpage({ itemID, buyers }) {
             return;
         if (selectedBuyer === "")
             return; //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
-        const socket = (0, socket_io_client_1.io)('https://sharity-production.up.railway.ap', {
+        const socket = (0, socket_io_client_1.io)('https://sharity-production.up.railway.app', {
             withCredentials: true,
             //here we are using websocket as transports for faster connection to socket
         }); //connecting to our backend server;

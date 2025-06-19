@@ -49,7 +49,7 @@ export default  function ChattingClientpage({itemID,buyers}:{itemID:string,buyer
 
     if(!Hydrated) return;
     if(selectedBuyer==="") return;  //if there is no buyer selected then we just close this function to prevent the unwanted socket connection
-    const  socket=io('https://sharity-production.up.railway.ap',{
+    const  socket=io('https://sharity-production.up.railway.app',{
       withCredentials:true,
         //here we are using websocket as transports for faster connection to socket
     });    //connecting to our backend server;
