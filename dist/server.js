@@ -1,5 +1,5 @@
 "use strict";
-const { createServer } = require("https"); //we are using the createServer from http to make a custom server for our socket connection
+const { createServer } = require("http"); //we are using the createServer from http to make a custom server for our socket connection
 const next = require("next");
 const { Server } = require("socket.io");
 const mongoose = require("mongoose");
@@ -74,5 +74,5 @@ app.prepare().then(async () => {
             console.log("user disconnected");
         });
     });
-    server.listen(PORT, () => console.log(`server running at http://localhost:${PORT}`)); //we must include the full url to visit the page locally
+    server.listen(PORT, "0.0.0.0", () => console.log(`server running at http://localhost:${PORT}`)); //we must include the full url to visit the page locally
 });
