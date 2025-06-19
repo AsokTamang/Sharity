@@ -27,6 +27,7 @@ function Signin() {
                 setloggedin(true);
                 react_hot_toast_1.default.success(message);
                 router.push(`/main`);
+                router.refresh();
             }
             else {
                 setloggedin(false);

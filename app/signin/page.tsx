@@ -32,6 +32,7 @@ export default function Signin() {
         toast.success(message);
         
         router.push(`/main`);  
+        router.refresh();
 
       } else {
         setloggedin(false);
