@@ -1,7 +1,7 @@
 Sharity
 Community‑driven platform for giving away and claiming unused items.
 
-🌱 Table of Contents
+TABLE OF CONTENTS
 About
 
 Features
