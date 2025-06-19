@@ -1,6 +1,7 @@
 "use client";
 
 import { itemStore } from "@/store/itemstore";
+import Link from "next/link";
 
 
 import Image from "next/image";
@@ -71,22 +72,22 @@ export default function Client({ data }: itemprops) {
             <p className="text-sm">📧 Email: {email}</p>
             <p className="text-sm">📞 Contact: {contact}</p>
 
-            <a href={`/chat/${data?._id}`}>
+            <Link href={`/chat/${data?._id}`}>
               <p className="text-base font-semibold text-green-700 hover:underline hover:text-green-800">
                 chat with the owner
               </p>
-            </a>
+            </Link>
           
           </div>
         )}
 
         {/* when the logged in user is the owner of an item */}
         {userID === data?.user?._id.toString() && (
-          <a href={`/chatting/${data?._id}`}>
+          <Link href={`/chatting/${data?._id}`}>
             <p className="text-base font-medium text-blue-600 hover:underline hover:text-blue-800">
               See your inbox
             </p>
-          </a>  //i used anchor tag here cause it will do the full page reload so that there will be new socket connection and we can see the latest chat messages.
+          </Link>  //i used anchor tag here cause it will do the full page reload so that there will be new socket connection and we can see the latest chat messages.
         )}
       </div>
     </div>
