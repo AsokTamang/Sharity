@@ -11,9 +11,9 @@ import { itemStore } from "@/store/itemstore";
 
 
 export default function Navbar() {
-  const { reset } = chatStore();
-  const { loggedin, setloggedin,reset1 } = authStore();
-  const {reset3}=itemStore();
+ 
+  const { loggedin, setloggedin} = authStore();
+  
   const router = useRouter();
 
   React.useEffect(() => {

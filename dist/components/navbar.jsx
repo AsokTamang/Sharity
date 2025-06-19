@@ -11,12 +11,8 @@ const navigation_1 = require("next/navigation");
 const react_hot_toast_1 = __importDefault(require("react-hot-toast"));
 const react_1 = __importDefault(require("react"));
 const globalstate_1 = require("@/store/globalstate");
-const chatStore_1 = require("@/store/chatStore");
-const itemstore_1 = require("@/store/itemstore");
 function Navbar() {
-    const { reset } = (0, chatStore_1.chatStore)();
-    const { loggedin, setloggedin, reset1 } = (0, globalstate_1.authStore)();
-    const { reset3 } = (0, itemstore_1.itemStore)();
+    const { loggedin, setloggedin } = (0, globalstate_1.authStore)();
     const router = (0, navigation_1.useRouter)();
     react_1.default.useEffect(() => {
         (async () => {
