@@ -1,5 +1,5 @@
 "use strict";
-const { createServer } = require("http"); //we are using the createServer from http to make a custom server for our socket connection
+const { createServer } = require("https"); //we are using the createServer from http to make a custom server for our socket connection
 const next = require("next");
 const { Server } = require("socket.io");
 const mongoose = require("mongoose");
