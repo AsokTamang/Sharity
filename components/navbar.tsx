@@ -7,10 +7,13 @@ import toast from "react-hot-toast";
 import React from "react";
 import { authStore } from "@/store/globalstate";
 import { chatStore } from "@/store/chatStore";
+import { itemStore } from "@/store/itemstore";
+
 
 export default function Navbar() {
   const { reset } = chatStore();
-  const { loggedin, setloggedin } = authStore();
+  const { loggedin, setloggedin,reset1 } = authStore();
+  const {reset3}=itemStore();
   const router = useRouter();
 
   React.useEffect(() => {
@@ -36,6 +39,9 @@ export default function Navbar() {
         router.push("/");
         setloggedin(false);
         reset(); // Reset Zustand store
+        reset1();
+        reset3();
+
       }
     } catch (error: unknown) {
       if(error instanceof Error){

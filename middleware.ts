@@ -5,12 +5,12 @@ import { userModal } from "./models/usermodel";
 
 const secretKey = process.env.JWT_KEY!;
 export async function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value || null; //here we are getting the token from the  cookies of the request if the value doesnot exisst then we set the token to null
+  const token = request.cookies.get("token")?.value || ""; //here we are getting the token from the  cookies of the request if the value doesnot exisst then we set the token to null
   const publicpath =
     request.nextUrl.pathname.startsWith("/signin") ||
     request.nextUrl.pathname.startsWith("/signup"); //here we are making the signin and signup page public for the logic to be done
 
-  if (!token && !publicpath) {
+  if (token==="" && !publicpath) {
     //here we are checking if the token doesnot exist and if the user is trying to access the other pages then the users are restricted from accessing those pages.
     return NextResponse.redirect(new URL("/signin", request.nextUrl));
   }

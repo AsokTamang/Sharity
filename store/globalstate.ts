@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import {create} from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 
 type authType={
@@ -11,11 +12,12 @@ type authType={
     setupdatedItem:(state:any)=>void,
     activeId:any,
     setactiveId:(id:any)=>void,
+    reset1:()=>void,
 
 
 }
 
-export const authStore=create<authType>((set)=>({
+export const authStore=create<authType>()(persist((set)=>({
     loggedin:false,
     setloggedin:(status)=>set({loggedin:status}),
     opened:false,
@@ -23,7 +25,24 @@ export const authStore=create<authType>((set)=>({
     updatedItem:{name:'',description:'',image:'',condition:''},
     setupdatedItem:(state)=>set({updatedItem:state}),
     activeId:'',
-    setactiveId:(id)=>set({activeId:id})
+    setactiveId:(id)=>set({activeId:id}),
+    reset1:()=>set({loggedin:false,
+        opened:false,
+
+    })
+}
+
+
+),{
+    name:'global-storage',
+    storage:createJSONStorage(()=>localStorage)
+    ,
+    partialize:(state)=>({
+        loggedin:state.loggedin
+    }
+)
+
+
 }))
 
 

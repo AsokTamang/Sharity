@@ -114,6 +114,12 @@ exports.itemStore = (0, zustand_1.create)()((0, middleware_1.persist)((set) => (
             };
         }
     },
+    reset3: () => set({
+        user: null,
+        userID: "",
+        items: [],
+        Hydrated: false,
+    })
 }), {
     name: "item-Storage",
     storage: (0, middleware_1.createJSONStorage)(() => localStorage), //here we are saving our userid and user info from here in our local storage called item-Storage.

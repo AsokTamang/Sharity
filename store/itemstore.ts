@@ -58,6 +58,7 @@ interface itemstoreType {
     data?: item[];
     status: number;
   }>;
+  reset3:()=>void
 }
 
 export const itemStore = create<itemstoreType>()(
@@ -171,6 +172,13 @@ export const itemStore = create<itemstoreType>()(
           };
         }
       },
+      reset3:()=>set({
+        user:null,
+        userID:"",
+        items:[],
+        Hydrated:false,
+      
+      })
     }),
     {
       name: "item-Storage",
