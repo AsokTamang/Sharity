@@ -38,9 +38,8 @@ export default function Navbar() {
       if (success) {
         router.push("/");
         setloggedin(false);
-        reset(); // Reset Zustand store
-        reset1();
-        reset3();
+        window.location.reload();  //here after clicking this logout button we are reloading the page so that it will be back to normal functionality.
+       
 
       }
     } catch (error: unknown) {
