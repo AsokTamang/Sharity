@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import React from "react";
 import { authStore } from "@/store/globalstate";
-import { chatStore } from "@/store/chatStore";
-import { itemStore } from "@/store/itemstore";
+
 
 
 export default function Navbar() {
