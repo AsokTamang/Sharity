@@ -25,7 +25,10 @@ function ChatClientpage({ ownerID, itemID, }) {
         if (!userID)
             return;
         const roomid = [userID, ownerID, itemID].sort().join("_"); //we are making the roomid using the logged in user id , owner id and the item id and all of these are in string
-        const socket = (0, socket_io_client_1.io)(process.env.NEXT_PUBLIC_API_URL); //connecting to our backend server;
+        const socket = (0, socket_io_client_1.io)('https://sharity-production.up.railway.ap', {
+            withCredentials: true,
+            transports: ['websocket'], //faster socket connection.
+        }); //connecting to our backend server;
         (_a = socketRef.current) === null || _a === void 0 ? void 0 : _a.disconnect(); //we are disconnecting the older socket connection to prevent the duplicate messages and duplicate connection
         socketRef.current = socket; //here we are storing the instace of our actual socket in our socketRef using the useRef react hook.
         socket.emit("join-room", { roomID: roomid }); //here we are passing the join-room event to our backend server.

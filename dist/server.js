@@ -7,7 +7,7 @@ const { messageModal } = require("./models/messagemodel"); // adjust path if nec
 const { connection } = require("./connectionconfig/connectionconfig");
 const { buyerModal } = require("./models/buyerModal");
 const { roomidModal } = require("./models/roomModal");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev }); //here we are making the app from the instance of next depending upon the type of env
 const handle = app.getRequestHandler(); //here this handle function is the function of nextjs that handles the routing server functionality
@@ -16,9 +16,9 @@ app.prepare().then(async () => {
     const server = createServer(handle); //this function tells that this is our custom server and it's all methods are handled by the handle function of nextjs
     const io = new Server(server, {
         cors: {
-            origin: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000", //this is the server link in which our next js app runs
+            origin: "https://sharity-production.up.railway.app", //this is the server link in which our next js app runs
             credentials: true,
-            methods: ["GET", "POST"],
+            methods: ["GET", "POST"]
         },
     }); //this is our actual socket server;
     io.on("connection", (socket) => {
