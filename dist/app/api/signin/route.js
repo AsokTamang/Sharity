@@ -30,11 +30,15 @@ async function POST(req) {
             }, { status: 401 });
         }
         //if all of the conditions are valid then we assign a token to the signed in user.
-        const token = jsonwebtoken_1.default.sign({ userID: existingUser._id }, secretKey, { expiresIn: "1d" }); //here we are passing the user's mongodb id as the token so that it will be easier to find the user data later 
-        const res = server_1.NextResponse.json({ success: true, token: token, message: 'successful signin' }, { status: 200 });
-        res.cookies.set('token', token, { httpOnly: true, path: '/',
-            sameSite: 'lax', //we are using samesite:lax inorder to prevent the cross-site issue
-            secure: process.env.NODE_ENV === 'production'
+        const token = jsonwebtoken_1.default.sign({ userID: existingUser._id }, secretKey, {
+            expiresIn: "1d",
+        }); //here we are passing the user's mongodb id as the token so that it will be easier to find the user data later
+        const res = server_1.NextResponse.json({ success: true, token: token, message: "successful signin" }, { status: 200 });
+        res.cookies.set("token", token, {
+            httpOnly: true,
+            path: "/",
+            sameSite: "lax", //we are using samesite:lax inorder to prevent the cross-site issue
+            secure: process.env.NODE_ENV === "production",
         }); // then we are setting the cookies to the response provided after generating a token
         return res;
     }

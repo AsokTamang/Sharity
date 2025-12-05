@@ -1,0 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_runtime_1 = require("react/jsx-runtime");
+const Page = () => {
+    return ((0, jsx_runtime_1.jsx)("main", { className: "flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-100 to-yellow-200 px-4 py-16", children: (0, jsx_runtime_1.jsxs)("div", { className: "max-w-2xl w-full bg-white rounded-2xl shadow-lg p-10 space-y-6", children: [(0, jsx_runtime_1.jsx)("h1", { className: "text-4xl font-extrabold font-sans text-gray-800 text-center", children: "Sharity" }), (0, jsx_runtime_1.jsx)("hr", { className: "border-t-2 border-amber-400" }), (0, jsx_runtime_1.jsxs)("p", { className: "text-gray-700 text-lg leading-relaxed text-center", children: [(0, jsx_runtime_1.jsx)("span", { className: "font-semibold", children: "Sharity" }), " is a peer-to-peer exchange platform that fosters sustainable living by enabling users to give away or receive items they no longer need. Through our intuitive app, users can list goods they wish to part with and connect with others in the community who may benefit from them."] }), (0, jsx_runtime_1.jsx)("p", { className: "text-gray-700 text-lg leading-relaxed text-center", children: "By facilitating mutual agreements between users, the platform promotes responsible consumption, reduces waste, and encourages meaningful connections through item sharing." })] }) }));
+};
+exports.default = Page;
