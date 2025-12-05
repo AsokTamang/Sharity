@@ -104,13 +104,12 @@ export default function Fetching() {
         {userID === item?.user?._id?.toString() ? "Your item" : "Other's item"}
       </p>
 
-      <Image
+      <img
         src={item.image!}
         alt="item-image"
         width={365}
         height={200}
         className="rounded-xl object-cover h-[200px] w-full"
-        priority={false}
       />
 
       <div className="flex flex-col gap-1 text-gray-800">
