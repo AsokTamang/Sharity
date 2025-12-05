@@ -32,7 +32,7 @@ export default function Signup() {
       }
     } catch (error: unknown ) {
       if(error instanceof Error){
-      toast.error(error.message || "Submission failed");}
+      toast.error('The id is already used');}
     }
   };
 
