@@ -4,7 +4,7 @@ import { itemStore } from "@/store/itemstore";
 import Link from "next/link";
 
 
-import Image from "next/image";
+
 
 // Props passed from server to client
 interface itemprops {
@@ -44,13 +44,12 @@ export default function Client({ data }: itemprops) {
       </p>
 
       {/* item image */}
-      <Image
+      <img
         src={image}
         alt="item-image"
         width={365}
         height={200}
         className="rounded-xl object-cover h-[200px] w-full"
-        priority={false}
       />
 
       {/* item info */}
