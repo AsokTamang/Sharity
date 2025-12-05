@@ -27,7 +27,7 @@ export default function Signup() {
         toast.success(message);
         setTimeout(() => router.push("/main"), 1000);
       } else {
-        toast.error(message);
+        toast.error('ID is already used');
         console.log(error);
       }
     } catch (error: unknown ) {
